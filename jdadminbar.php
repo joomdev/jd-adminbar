@@ -110,7 +110,7 @@ class PlgSystemJDAdminBar extends JPlugin
 		
 		$outputhtml  		.= $menulinks;
 		$newhtmllinks 		 = $this->GetlinkHtml($adminnurl."index.php?option=com_content&task=article.add",JText::_('COM_CONTENT_FIELDS_TYPE_MODAL_ARTICLE'));
-		$newhtmllinks 		.= $this->GetlinkHtml($adminnurl."index.php?option=com_content&task=category.add",JText::_('JCATEGORY'));
+		$newhtmllinks 		.= $this->GetlinkHtml($adminnurl."index.php?option=com_categories&task=category.add&extension=com_content",JText::_('JCATEGORY'));
 		$newhtmllinks 		.= $this->GetlinkHtml($adminnurl."index.php?option=com_modules&view=select",JText::_('COM_MODULES_MODULE'));
 		$newhtmllinks 		.= $this->GetlinkHtml($adminnurl."index.php?option=com_menus&view=item&layout=edit",JText::_('COM_MENUS_ITEM_FIELD_ALIAS_MENU_LABEL'));
 		$newhtmllinks 		.= $this->GetlinkHtml($adminnurl."index.php?option=com_users&task=user.add",JText::_('COM_ADMIN_HELP_USERS_USER_MANAGER'));
