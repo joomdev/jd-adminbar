@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>info@joomdev.com</authorEmail>
 	<authorUrl>www.joomdev.com</authorUrl>
-	<version>1.0</version>
+	<version>1.1</version>
 	<description>JD Admin Bar Plugin - Enable Top bar for you to start editing your pages right from the frontend. Supports core Joomla Articles, category and 3rd party, JD Builder, Hikashop, Virtuemart, Easyblog and J2Store</description>
 	<files>
 		<filename plugin="jdadminbar">jdadminbar.php</filename>
