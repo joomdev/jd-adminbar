@@ -41,6 +41,18 @@ class PlgSystemJDAdminBar extends JPlugin
 		$language->load('com_admin', JPATH_ADMINISTRATOR);
 		$language->load('com_content', JPATH_ADMINISTRATOR);
 		$language->load('com_modules', JPATH_ADMINISTRATOR);
+		$language->load('com_users', JPATH_ADMINISTRATOR);
+		if(JVERSION < 4) {
+			// Joomla 3 or whatever.
+			$dashboardtext 		= 	JText::_('COM_CPANEL_LINK_DASHBOARD');
+			$globalconfigtext	=	JText::_('COM_CPANEL_LINK_GLOBAL_CONFIG');
+			$sysinfotext		= 	JText::_('COM_CPANEL_LINK_SYSINFO');
+		} else {
+			// Joomla 4
+			$dashboardtext 		= 	JText::_('COM_CPANEL_DASHBOARD_BASE_TITLE');
+			$globalconfigtext	=	JText::_('COM_ADMIN_HELP_SITE_GLOBAL_CONFIGURATION');
+			$sysinfotext		= 	JText::_('COM_ADMIN');
+		}
 		
 		$user 				= 		Factory::getUser();
 		if (Factory::getApplication()->isClient('administrator') || !in_array('8',$user->groups)) {
@@ -71,7 +83,11 @@ class PlgSystemJDAdminBar extends JPlugin
 
 		$modulelinkshtmllinks = '';
 		foreach ($this->modules as $module) {
-			$modulelinkshtmllinks 	.= $this->GetlinkHtml($adminnurl . "index.php?option=com_modules&task=module.edit&id={$module->id}", "{$module->title} <span>(" . (empty($module->position) ? '<em>ID: ' . $module->id . '</em>' : '<em>' . JText::_('COM_MODULES_HEADING_POSITION') . ': ' . $module->position . '</em>') . ")</span>");
+			// only render the module if there is a valid ID associated.
+			// somehow rendermodle id rednered without an Id as well.
+			if(is_numeric($module->id)) {
+				$modulelinkshtmllinks 	.= $this->GetlinkHtml($adminnurl . "index.php?option=com_modules&task=module.edit&id={$module->id}", "{$module->title} <span>(" . (empty($module->position) ? '<em>ID: ' . $module->id . '</em>' : '<em>' . JText::_('COM_MODULES_HEADING_POSITION') . ': ' . $module->position . '</em>') . ")</span>");
+			}
 		}
 
 		if(isset($modulelinkshtmllinks)) {
@@ -94,12 +110,13 @@ class PlgSystemJDAdminBar extends JPlugin
 			
 		$outputhtml = "<!-- JD Admin Bar Plugin by JoomDev.com start --><div id='wpadminbar' class='nojq nojs'><div class='quicklinks'  role='navigation' aria-label='Toolbar'><ul class='ab-top-menu'><li class='menupop'>";
 							
-		$dlinks   = $this->GetlinkHtml($adminnurl,JText::_('COM_CPANEL_LINK_DASHBOARD'));
+		$dlinks   = $this->GetlinkHtml($adminnurl,$dashboardtext);
 		$dlinks  .= $this->GetlinkHtml($adminnurl."index.php?option=com_content",JText::_('COM_ADMIN_HELP_CONTENT_ARTICLE_MANAGER'));
 		$dlinks  .= $this->GetlinkHtml($adminnurl."index.php?option=com_modules",JText::_('COM_ADMIN_HELP_EXTENSIONS_MODULE_MANAGER'));
 		$dlinks  .= $this->GetlinkHtml($adminnurl."index.php?option=com_menus",JText::_('COM_MENUS_VIEW_MENUS_TITLE'));
-		$dlinks  .= $this->GetlinkHtml($adminnurl."index.php?option=com_admin&view=sysinfo",JText::_('COM_CPANEL_LINK_SYSINFO'));
-		$dlinks  .= $this->GetlinkHtml($adminnurl."index.php?option=com_config",JText::_('COM_CPANEL_LINK_GLOBAL_CONFIG'));
+		$dlinks  .= $this->GetlinkHtml($adminnurl."index.php?option=com_users",JText::_('COM_ADMIN_HELP_USERS_USER_MANAGER'));
+		$dlinks  .= $this->GetlinkHtml($adminnurl."index.php?option=com_admin&view=sysinfo",$sysinfotext);
+		$dlinks  .= $this->GetlinkHtml($adminnurl."index.php?option=com_config",$globalconfigtext);
 		
 		// Defaultlinks
 		$defaultlinks		 = 	new StdClass();
@@ -113,7 +130,7 @@ class PlgSystemJDAdminBar extends JPlugin
 		$newhtmllinks 		.= $this->GetlinkHtml($adminnurl."index.php?option=com_categories&task=category.add&extension=com_content",JText::_('JCATEGORY'));
 		$newhtmllinks 		.= $this->GetlinkHtml($adminnurl."index.php?option=com_modules&view=select",JText::_('COM_MODULES_MODULE'));
 		$newhtmllinks 		.= $this->GetlinkHtml($adminnurl."index.php?option=com_menus&view=item&layout=edit",JText::_('COM_MENUS_ITEM_FIELD_ALIAS_MENU_LABEL'));
-		$newhtmllinks 		.= $this->GetlinkHtml($adminnurl."index.php?option=com_users&task=user.add",JText::_('COM_ADMIN_HELP_USERS_USER_MANAGER'));
+		$newhtmllinks 		.= $this->GetlinkHtml($adminnurl."index.php?option=com_users&task=user.add",JText::_('COM_USERS_FIELD_USER_ID_LABEL'));
 		if(isset($links->newlink)) {
 			$newhtmllinks 		.= $this->GetlinkHtml($adminnurl.$links->newlink,ucfirst($links->type));
 		}
