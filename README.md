@@ -1,4 +1,4 @@
-# jd-adminbar
+# Jd Admin Bar
 Access the Admin Controls when you are on the Front-end of your Joomla Site
 
 Future 
