@@ -2,7 +2,7 @@
  * @package     JD Admin Bar
  * @description Enables Top Bar for your Joomla site
  * @Help		www.joomdev.com/forum
- * @copyright   Copyright (C) 2009 - 2020 JoomDev. All rights reserved.
+ * @copyright   Copyright (C) 2009 - 2021 JoomDev. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @copied		Original File copied from Wordpress Package.
  */
