@@ -6,11 +6,9 @@
  * @copyright   Copyright (C) 2009 - 2020 JoomDev. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-
 defined('_JEXEC') or die;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
-
 class PlgSystemJDAdminBar extends JPlugin
 {
 	public $modules = [];
@@ -27,7 +25,6 @@ class PlgSystemJDAdminBar extends JPlugin
 			$doc->addScript(Uri::root().'plugins/system/jdadminbar/assets/js/admin-bar.js', ['version' => $doc->getMediaVersion()]);
 			$doc->addScript(Uri::root().'plugins/system/jdadminbar/assets/js/hoverintent-js.min.js', ['version' => $doc->getMediaVersion()]);
 	}
-
 	public function onRenderModule($module){
 		$this->modules[] = $module;
 	}
@@ -69,7 +66,7 @@ class PlgSystemJDAdminBar extends JPlugin
 		$menulinks 			= 		'';
 		$menu 				= 		$app->getMenu();
 		$active 			= 		$menu->getActive();
-		$ItemId 			= 		$active->id;
+		$ItemId 			= 		@$active->id;
 		
 		// Current menu type link
 		if($links->url) {
@@ -80,7 +77,6 @@ class PlgSystemJDAdminBar extends JPlugin
 		if($ItemId) {
 			$menulinks 		.= 	$this->GetlinkHtml($adminnurl."index.php?option=com_menus&task=item.edit&id={$ItemId}",JText::_('JACTION_EDIT').' '.JText::_('COM_MENUS_ITEM_FIELD_ALIAS_MENU_LABEL'));
 		}
-
 		$modulelinkshtmllinks = '';
 		foreach ($this->modules as $module) {
 			// only render the module if there is a valid ID associated.
@@ -89,7 +85,6 @@ class PlgSystemJDAdminBar extends JPlugin
 				$modulelinkshtmllinks 	.= $this->GetlinkHtml($adminnurl . "index.php?option=com_modules&task=module.edit&id={$module->id}", "{$module->title} <span>(" . (empty($module->position) ? '<em>ID: ' . $module->id . '</em>' : '<em>' . JText::_('COM_MODULES_HEADING_POSITION') . ': ' . $module->position . '</em>') . ")</span>");
 			}
 		}
-
 		if(isset($modulelinkshtmllinks)) {
 			$modlinks 			 = 	new StdClass();
 			$modlinks->name	 	 = 	JText::_('COM_MODULES_MODULES');
@@ -101,7 +96,7 @@ class PlgSystemJDAdminBar extends JPlugin
 		
 		// Templates
 		// Check if current menu item has a specially assigned template.
-		if($active->template_style_id == 0) {
+		if(!isset($active->template_style_id) || $active->template_style_id == 0) {
 			$templateid = $app->getTemplate('template')->id;
 		} else {
 			$templateid = $active->template_style_id;
@@ -158,7 +153,6 @@ class PlgSystemJDAdminBar extends JPlugin
 		}
 	}
 	
-
 	/*
 	*	Function to figure out the links and return based
 	*	on the same the links text assodicated
@@ -172,10 +166,10 @@ class PlgSystemJDAdminBar extends JPlugin
 		$menu 		= 		$app->getMenu();
 		$active 	= 		$menu->getActive();
 		$default 	=		$menu->getDefault();
-		$ItemId 	= 		$active->id;
+		$ItemId 	= 		@$active->id;
 		$uri 		= 		Uri::getInstance();
 		
-		if($active->id == $default->id) {
+		if(isset($active->id) && $active->id == $default->id) {
 			
 			// Since Homepage doesn't have a url 
 			// we have to get it from the active menu item.
@@ -250,7 +244,6 @@ class PlgSystemJDAdminBar extends JPlugin
 				}
 				
 				$component	=	'K2';
-
 				break;	
 			
 			// Phoca Cart
@@ -270,7 +263,6 @@ class PlgSystemJDAdminBar extends JPlugin
 				}
 				
 				$component	=	'Phoca Cart';
-
 				break;
 				
 			// Phoca Gallery
@@ -283,7 +275,6 @@ class PlgSystemJDAdminBar extends JPlugin
 				}
 			
 				$component	=	'Phoca Gallery';
-
 				break;
 				
 			// Phoca Download
@@ -297,7 +288,6 @@ class PlgSystemJDAdminBar extends JPlugin
 				}
 				
 				$component	=	'Phoca Cart';
-
 				break;
 			case 'com_contact':
 				if($view == 'contact') {
@@ -369,7 +359,6 @@ class PlgSystemJDAdminBar extends JPlugin
 				$component		=	'J2Store';
 				
 				break;
-
 			case 'com_easyblog':
 				// Single Post
 				if($view == 'entry') {
