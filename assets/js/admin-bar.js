@@ -8,7 +8,7 @@
  */
 ( function( document, window, navigator ) {
 	document.addEventListener( 'DOMContentLoaded', function() {
-		var adminBar = document.getElementById( 'wpadminbar' ),
+		var adminBar = document.getElementById( 'jdadminbar' ),
 			topMenuItems,
 			allMenuItems,
 			adminBarLogout,
@@ -32,6 +32,9 @@
 		skipLink = adminBar.querySelector( '.screen-reader-shortcut' );
 		mobileEvent = /Mobile\/.+Safari/.test( navigator.userAgent ) ? 'touchstart' : 'click';
 		fontFaceRegex = /Android (1.0|1.1|1.5|1.6|2.0|2.1)|Nokia|Opera Mini|w(eb)?OSBrowser|webOS|UCWEB|Windows Phone OS 7|XBLWP7|ZuneWP7|MSIE 7/;
+
+		// Add 'jd-admin-bar' class to body after the DOM is loaded.
+		addClass( document.body, 'jd-adminbar' );
 
 		// Remove nojs class after the DOM is loaded.
 		removeClass( adminBar, 'nojs' );
@@ -398,10 +401,10 @@
 	 * @return {void}
 	 */
 	function scrollToTop( event ) {
-		// Only scroll when clicking on the wpadminbar, not on menus or submenus.
+		// Only scroll when clicking on the jdadminbar, not on menus or submenus.
 		if (
 			event.target &&
-			event.target.id !== 'wpadminbar' &&
+			event.target.id !== 'jdadminbar' &&
 			event.target.id !== 'wp-admin-bar-top-secondary'
 		) {
 			return;

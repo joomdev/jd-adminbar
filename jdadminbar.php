@@ -103,7 +103,7 @@ class PlgSystemJDAdminBar extends JPlugin
 		}
 			$menulinks	.= $this->GetlinkHtml($adminnurl."index.php?option=com_templates&task=style.edit&id={$templateid}",JText::_('COM_CONFIG_TEMPLATE_SETTINGS'));
 			
-		$outputhtml = "<!-- JD Admin Bar Plugin by JoomDev.com start --><div id='wpadminbar' class='nojq nojs'><div class='quicklinks'  role='navigation' aria-label='Toolbar'><ul class='ab-top-menu'><li class='menupop'>";
+		$outputhtml = "<!-- JD Admin Bar Plugin by JoomDev.com start --><div id='jdadminbar' class='nojq nojs'><div class='quicklinks'  role='navigation' aria-label='Toolbar'><ul class='ab-top-menu'><li class='menupop'>";
 							
 		$dlinks   = $this->GetlinkHtml($adminnurl,$dashboardtext);
 		$dlinks  .= $this->GetlinkHtml($adminnurl."index.php?option=com_content",JText::_('COM_ADMIN_HELP_CONTENT_ARTICLE_MANAGER'));
